@@ -111,22 +111,22 @@ RSpec.describe User, type: :model do
       it 'family_nameが全角英字・数字では登録できない' do
         @user.family_name = 'w１'
         @user.valid?
-        expect(@user.errors.full_messages).to include "Family name is invalid"
+        expect(@user.errors.full_messages).to include 'Family name is invalid'
       end
       it 'first_nameが全角英字・数字では登録できない' do
         @user.first_name = 'w１'
         @user.valid?
-        expect(@user.errors.full_messages).to include "First name is invalid"
+        expect(@user.errors.full_messages).to include 'First name is invalid'
       end
       it 'family_kanaが全角(英字・数字・漢字・ひらがな)では登録できない' do
         @user.family_name = 'w１愛ひ'
         @user.valid?
-        expect(@user.errors.full_messages).to include "Family name is invalid"
+        expect(@user.errors.full_messages).to include 'Family name is invalid'
       end
       it 'first_kanaが全角(英字・数字・漢字・ひらがな)では登録できない' do
         @user.first_name = 'w１愛ひ'
         @user.valid?
-        expect(@user.errors.full_messages).to include "First name is invalid"
+        expect(@user.errors.full_messages).to include 'First name is invalid'
       end
     end
   end
