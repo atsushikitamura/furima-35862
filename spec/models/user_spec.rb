@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
       it 'emailは@を含めないと登録できない' do
         @user.email = 'kokookoko'
         @user.valid?
-        expect(@user.errors.full_messages).to include "Email is invalid"
+        expect(@user.errors.full_messages).to include 'Email is invalid'
       end
       it 'passwordが5文字以下では登録できない' do
         @user.password = '0000a'
