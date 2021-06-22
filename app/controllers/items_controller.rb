@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  # リダイレクト処理？ パスを入力すれば、ログインしていなくても（新規投稿画面に）アクセスできてしまう
+  before_action :authenticate_user!, only: :new
 
   def index
   end

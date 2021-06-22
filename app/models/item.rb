@@ -23,7 +23,6 @@ class Item < ApplicationRecord
       validates :delivery_period_id
     end
 
-    validates :price, numericality: { in: 300..9999999 }
-    validates :price, format: { with: /\A[0-9]+\z/}
+    validates :price, numericality: { in: 300..9999999 }, format: { with: /\A[0-9]+\z/ }
   end
 end
