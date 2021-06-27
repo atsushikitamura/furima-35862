@@ -1,4 +1,4 @@
-<%= render "devise/shared/second-header"%>
+<%= render 'shared/second-header' %>
 
 <div class='transaction-contents'>
   <div class='transaction-main'>
@@ -33,7 +33,7 @@
 
     <%= form_with model: @order_address, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap',local: true do |f| %>
 
-    <%= render 'devise/shared/error_messages', model: f.object %>
+    <%= render 'shared/error_messages', model: f.object %>
 
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
@@ -130,4 +130,4 @@
     <% end %>
   </div>
 </div>
-<%= render "devise/shared/second-footer"%>
+<%= render "shared/second-footer"%>
