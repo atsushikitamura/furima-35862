@@ -21,7 +21,7 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address).to be_valid
       end
       it 'phone_numberが10〜11桁の半角数字なら保存できる' do
-        @order_address.phone_number = 1234567890
+        @order_address.phone_number = 1_234_567_890
         expect(@order_address).to be_valid
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe OrderAddress, type: :model do
       it 'prefecture_idが空(1)のとき保存できない' do
         @order_address.prefecture_id = 1
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Prefecture must be other than 1")
+        expect(@order_address.errors.full_messages).to include('Prefecture must be other than 1')
       end
       it 'cityが空のとき保存できない' do
         @order_address.city = ''
@@ -68,36 +68,35 @@ RSpec.describe OrderAddress, type: :model do
         expect(@order_address.errors.full_messages).to include("Item can't be blank")
       end
       it 'postal_codeに-が含まれていないとき保存できない' do
-        @order_address.postal_code = 4567890
+        @order_address.postal_code = 4_567_890
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it 'postal_codeが3桁+4桁になっていないとき保存できない' do
-        @order_address.postal_code = 23-45678
+        @order_address.postal_code = 23 - 45_678
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it 'postal_codeが全角であるとき保存できない' do
         @order_address.postal_code = '４５６-２３４５'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it 'phone_numberが9桁以下では登保存できない' do
-        @order_address.phone_number = 345678987
+        @order_address.phone_number = 345_678_987
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
       it 'phone_numberが12桁以上では保存できない' do
-        @order_address.phone_number = 234567162534
+        @order_address.phone_number = 234_567_162_534
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
       it 'phone_numberが全角では登保存できない' do
         @order_address.phone_number = '１９２８３７４６１８７'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
     end
-    
   end
 end
