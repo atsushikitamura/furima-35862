@@ -70,17 +70,17 @@ RSpec.describe OrderAddress, type: :model do
       it 'postal_codeに-が含まれていないとき保存できない' do
         @order_address.postal_code = 4_567_890
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'postal_codeが3桁+4桁になっていないとき保存できない' do
         @order_address.postal_code = 23 - 45_678
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'postal_codeが全角であるとき保存できない' do
         @order_address.postal_code = '４５６-２３４５'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'phone_numberが9桁以下では登保存できない' do
         @order_address.phone_number = 345_678_987
@@ -94,6 +94,11 @@ RSpec.describe OrderAddress, type: :model do
       end
       it 'phone_numberが全角では登保存できない' do
         @order_address.phone_number = '１９２８３７４６１８７'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
+      end
+      it 'phone_numberが半角英字では登保存できない' do
+        @order_address.phone_number = 'oooooiiiii'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
