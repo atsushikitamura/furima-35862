@@ -1,4 +1,4 @@
-<%= render partial: "devise/shared/header" %>
+<%= render partial: "shared/header" %>
 <div class='main'>
 
   <%# 画面上部の「人生を変えるフリマアプリ」帯部分 %>
@@ -134,11 +134,11 @@
           <div class='item-img-content'>
             <%= image_tag item.image, class: "item-img" %>
 
-            <%# 商品が売れていればsold outを表示しましょう %>
+            <% if item.order.present? %>
             <div class='sold-out'>
               <span>Sold Out!!</span>
             </div>
-            <%# //商品が売れていればsold outを表示しましょう %>
+            <% end %>
 
           </div>
           <div class='item-info'>
@@ -184,4 +184,4 @@
   <span class='purchase-btn-text'>出品する</span>
   <%= image_tag 'icon_camera.png' , size: '185x50' ,class: "purchase-btn-icon" %>
 <% end %>
-<%= render partial: "devise/shared/footer" %>
+<%= render partial: "shared/footer" %>
