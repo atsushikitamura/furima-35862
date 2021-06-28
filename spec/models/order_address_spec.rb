@@ -12,12 +12,12 @@ RSpec.describe OrderAddress, type: :model do
       it 'token、postal_code、prefecture_id、city、house_number、phone_numberが存在していて、user_id、item_idがそれぞれ紐づいていれば保存できる' do
         expect(@order_address).to be_valid
       end
-      it 'building_nameは空でも保存できる' do
-        @order_address.building_name = ''
-        expect(@order_address).to be_valid
-      end
       it 'postal_codeが3桁-4桁の形式であれば保存できる' do
         @order_address.postal_code = '847-8484'
+        expect(@order_address).to be_valid
+      end
+      it 'building_nameは空でも保存できる' do
+        @order_address.building_name = ''
         expect(@order_address).to be_valid
       end
       it 'phone_numberが10〜11桁の半角数字なら保存できる' do
@@ -32,10 +32,35 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Token can't be blank")
       end
+      it 'user_idが紐づいていないとき保存できない' do
+        @order_address.user_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idが紐づいていないとき保存できない' do
+        @order_address.item_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Item can't be blank")
+      end
       it 'postal_codeが空のとき保存できない' do
         @order_address.postal_code = ''
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Postal code can't be blank")
+      end
+      it 'postal_codeに-が含まれていないとき保存できない' do
+        @order_address.postal_code = 4_567_890
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
+      end
+      it 'postal_codeが3桁+4桁になっていないとき保存できない' do
+        @order_address.postal_code = 23 - 45_678
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
+      end
+      it 'postal_codeが全角であるとき保存できない' do
+        @order_address.postal_code = '４５６-２３４５'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'prefecture_idが空(1)のとき保存できない' do
         @order_address.prefecture_id = 1
@@ -56,31 +81,6 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.phone_number = ''
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Phone number can't be blank")
-      end
-      it 'user_idが紐づいていないとき保存できない' do
-        @order_address.user_id = nil
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("User can't be blank")
-      end
-      it 'item_idが紐づいていないとき保存できない' do
-        @order_address.item_id = nil
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Item can't be blank")
-      end
-      it 'postal_codeに-が含まれていないとき保存できない' do
-        @order_address.postal_code = 4_567_890
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
-      end
-      it 'postal_codeが3桁+4桁になっていないとき保存できない' do
-        @order_address.postal_code = 23 - 45_678
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
-      end
-      it 'postal_codeが全角であるとき保存できない' do
-        @order_address.postal_code = '４５６-２３４５'
-        @order_address.valid?
-        expect(@order_address.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'phone_numberが9桁以下では登保存できない' do
         @order_address.phone_number = 345_678_987
